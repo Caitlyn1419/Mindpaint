@@ -1,0 +1,95 @@
+{% extends 'template_test.html' %}
+
+{% load static %}
+
+{% block form_content %}
+<style>
+    #selection-wrapper > a:not(:first-child) {
+        margin-left: 0.5rem;
+    }
+</style>
+
+<h3 id="choose-color" class="mt-3 mb-5 text-center">请证明您不是机器</h3>
+
+<div class="mx-auto my-3">
+    <img id="picture" width="200" height="200">
+</div>
+<div id="selection-wrapper" class="my-5 text-center"></div>
+
+<input type="text" style="display: none" id="value" name="value" required>
+
+<script type="text/javascript">
+    const allPictures = {
+        'plate2.gif': {
+            correct: 8,
+            choices: [3, 6, 8]
+        },
+        'plate3.gif': {
+            correct: 29,
+            choices: [70, 37, 29]
+        },
+        'plate4.gif': {
+            correct: 5,
+            choices: [70, 75, 5, 2]
+        },
+        'plate5.gif': {
+            correct: 3,
+            choices: [2, 4, 3, 5]
+        },
+        'plate6.gif': {
+            correct: 15,
+            choices: [5, 25, 15, 17]
+        },
+        'plate7.gif': {
+            correct: 74,
+            choices: [17, 24, 74, 21]
+        },
+        'plate16.gif': {
+            correct: 26,
+            choices: [6, 2, 26]
+        },
+        'plate17.gif': {
+            correct: 42,
+            choices: [2, 4, 42]
+        }
+    }
+    const shownPictures = []
+    let result = ''
+    let picturesToTest = 2
+
+    const randInt = (min, max) => min + Math.floor(Math.random() * (max - min))
+    const shuffle = arr => arr.map(val => ([val, Math.random()])).sort((x, y) => x[1] - y[1]).map(tuple => tuple[0])
+
+    const showOnePicture = function () {
+        const picRoot = '{% static 'images/' %}'
+        const pics = Object.keys(allPictures)
+        let currentPic
+        do {
+            currentPic = pics[randInt(0, pics.length)]
+        } while (shownPictures.includes(currentPic))
+        shownPictures.push(currentPic)
+        $('#picture').attr('src', picRoot + currentPic)
+
+        $('#selection-wrapper').children().remove()
+        shuffle(allPictures[currentPic].choices).forEach(num => {
+            const button = $('<a>', {
+                class: 'btn btn-info btn-lg',
+                text: num
+            })
+            button.on('click', () => {
+                result += (num === allPictures[currentPic].correct) ? 'T' : 'F'
+                --picturesToTest
+                if (picturesToTest === 0) {
+                    $('#value').val(result)
+                    $('#next-test').click()
+                } else {
+                    showOnePicture()
+                }
+            })
+            $('#selection-wrapper').append(button)
+        })
+    }
+
+    $(showOnePicture)
+</script>
+{% endblock %}

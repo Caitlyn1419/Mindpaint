@@ -1,0 +1,185 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}MindPainting{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/welcome.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+<main class="form-signin">
+    <form method="POST" action="{% url 'welcome' %}">
+        {% csrf_token %}
+        <img class="m-1 mb-6" src="{% static '/images/logo.png' %}" alt="" width="256">
+{#        <h1 class="h3 mb-3 fw-normal">#}
+{#            {% if lang == 'en' %}Mind Painting{% else %}心理画{% endif %}#}
+{#        </h1>#}
+
+{#      name#}
+        <div class="form-item form-floating">
+            <input class="form-control" name="username" id="username" required>
+            <label for="username">{% if lang == 'en' %}Name{% else %}姓名{% endif %}</label>
+        </div>
+{#      age selection#}
+        <div class="form-item form-floating">
+            <select class="form-select" id="userage" name="userage" value="" required>
+                <option hidden disabled selected value="">-</option>
+                <option value="20"><20</option>
+                <option value="20">20~30</option>
+                <option value="30">31~40</option>
+                <option value="40">41~50</option>
+                <option value="50">51~60</option>
+                <option value="60">61~70</option>
+                <option value="70">>70</option>
+            </select>
+            <label for="userage">{% if lang == 'en' %}Age{% else %}年龄{% endif %}</label>
+        </div>
+{#      role selection#}
+        <div class="form-item form-floating">
+            <select class="form-select" id="role" name="role" value="" required>
+                <option hidden disabled selected value="">-</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="postgraduate">Postgraduate</option>
+                <option value="staff">Faculty Staff</option>
+                <option value="others">Others</option>
+            </select>
+            <label for="role">{% if lang == 'en' %}Role{% else %}身份{% endif %}</label>
+        </div>
+{#      id input#}
+        <div id="divno" class="form-item form-floating" style="display: none">
+            <input type="text" class="form-control" name="userno" id="userno">
+            <label for="userno">{% if lang == 'en' %}User ID{% else %}学号/工号{% endif %}</label>
+        </div>
+{#      major selection#}
+        <div id="divprog" class="form-item" style="display: flex">
+            <div id="userdivwrapper" class="form-floating me-2" style="flex: auto">
+                <select class="form-select" id="userdiv" name="userdiv">
+                    <option hidden disabled selected value="">-</option>
+                </select>
+                <label for="userdiv">{% if lang == 'en' %}Division{% else %}学部{% endif %}</label>
+            </div>
+            <div id="userprogwrapper" class="form-floating" style="flex: auto">
+                <select class="form-select" id="userprog" name="userprog">
+                    <option hidden disabled selected value="">-</option>
+                </select>
+                <label for="userprog">{% if lang == 'en' %}Program{% else %}专业{% endif %}</label>
+            </div>
+        </div>
+
+{#        gender selection#}
+        <div class="form-item">
+            <span>
+                <input class="form-check-input" type="radio" name="gender" value="Male" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">Male</label>
+            </span>
+            <span class="ms-2">
+                <input class="form-check-input" type="radio" name="gender" value="Female" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">Female</label>
+            </span>
+        </div>
+
+        <button class="my-2 w-100 btn btn-lg btn-primary" type="submit">
+            {% if lang == 'en' %}Start{% else %}开始{% endif %}
+        </button>
+    </form>
+
+    {% if lang == 'en' %}
+        <a href="{% url 'welcomeCN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">中文</a>
+    {% else %}
+        <a href="{% url 'welcomeEN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">English</a>
+    {% endif %}
+
+
+    <p class="mt-5 mb-3 text-muted">&copy; Kang-dinsky</p>
+</main>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    const programs = {
+        undergraduate: {
+            fbm: ['ACCT', 'AE', 'EBIS', 'EPIN', 'FIN', 'MHR','MKT', 'THEM'],
+            fhss: ['ATS', 'CCGC','DSS','ELLS', 'GAD', 'MCOM', 'PRA','SWSA'],
+            scc: ['AIM', 'CCM', 'CTV', 'MAD','MP'],
+            fst: ['AI', 'AM', 'APSY', 'CST', 'DS', 'ENVS', 'FM', 'FST', 'STAT']
+        },
+        staff: {
+            fbm: ['ACCT', 'AE', 'EBIS', 'EPIN', 'FIN', 'MHR','MKT', 'THEM'],
+            fhss: ['ATS', 'CCGC','DSS','ELLS', 'GAD', 'MCOM', 'PRA','SWSA'],
+            scc: ['AIM', 'CCM', 'CTV', 'MAD', 'MP'],
+            fst: ['AI', 'AM', 'APSY', 'CST', 'DS', 'ENVS', 'FM', 'FST', 'STAT']
+        },
+        postgraduate:{
+            taught: ['AIDM', 'COMM', 'FTNM', 'IMS', 'MMGT'],
+            research: ['Accounting and Business Management','Applied English Linguistics','Appilied Mathematics','Biology',
+                            'Chemistry','Communication', 'Computer Science and Technology','Economics','Probability and Mathematical Statistics']
+        },
+    }
+
+    const onRoleChange = function () {
+        const role = $('#role').val()
+        if (role === 'undergraduate' || role === 'staff'|| role==='postgraduate'|| role==='postgraduate') {
+            $('#divprog, #userdivwrapper, #userprogwrapper').show()
+            $('#userdiv, #userprog').prop('required', true)
+            $('#userdiv option:not(:first-child)').remove()
+            $('#userprog option:not(:first-child)').remove()
+
+            // append options to userdiv
+            const divs = Object.keys(programs[role])
+            divs.forEach(division => {
+                $('#userdiv').append($('<option>', {
+                    value: division,
+                    text: division.toUpperCase()
+                }))
+            })
+        } else {
+            $('#divprog').hide()
+            $('#userdiv, #userprog').prop('required', false)
+        }
+        if (role === 'undergraduate' || role === 'postgraduate') {
+
+        }
+        if (role === 'staff' || role === 'others') {
+            $('#divno').hide()
+            $('#userno').prop('required', false)
+        } else {
+            $('#divno').show()
+            $('#userno').prop('required', true)
+        }
+        $('#userdiv, #userprog').val('')
+    }
+
+    const onDivisionChange = function () {
+        const role = $('#role').val(), division = $('#userdiv').val()
+        if (division) {
+            $('#userprog').val('')
+            $('#userprog option:not(:first-child)').remove()
+            const progs = programs[role][division]
+            progs.forEach(program => {
+                $('#userprog').append($('<option>', {
+                    value: program,
+                    text: program
+                }))
+            })
+        }
+    }
+
+    $(function () {
+        $('#divprog, #userdivwrapper, #userprogwrapper').hide()
+        $('#role').on('change', onRoleChange)
+        $('#userdiv').on('change', onDivisionChange)
+    })
+</script>
