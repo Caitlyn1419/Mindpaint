@@ -6,7 +6,8 @@ import random
 
 
 NUMBER_OF_TESTS = 15
-
+def language(request):
+    return render(request,'language.html')
 
 def welcome(request):
     if request.method == 'POST':
@@ -19,19 +20,15 @@ def welcome(request):
         request.session['randomshapes'] = []
         request.session.pop('submitted_data', None)
         return redirect('tests', 1)
-    return redirect('welcomeEN' if request.session.get('lang', 'en') == 'en' else 'welcomeCN')
+    #return redirect('welcomeEN' if request.session.get('lang', 'en') == 'en' else 'welcomeCN')
 
 
 def welcomeEN(request):
     request.session['lang'] = 'en'
     return render(request, 'welcome.html', {'lang': 'en'})
-
-
 def welcomeCN(request):
     request.session['lang'] = 'cn'
     return render(request, 'welcome.html', {'lang': 'cn'})
-
-
 def tests(request, test_id):
     if request.session.get('data') is None or request.session.get('randomshapes') is None:
         return redirect('welcome')

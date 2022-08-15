@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
+#找对应的函数，是哪个APP里面的函数
 from Paint import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.welcome, name='welcome'),
+    path('', views.language, name='language'),
+    path('index/', views.welcome, name='welcome'),
     path('index_en/', views.welcomeEN, name='welcomeEN'),
     path('index_cn/', views.welcomeCN, name='welcomeCN'),
     path('test/<int:test_id>', views.tests, name='tests'),
