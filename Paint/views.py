@@ -4,7 +4,7 @@ from Paint.models import testersData
 from datetime import datetime
 import random
 
-
+#The total number of the tests
 NUMBER_OF_TESTS = 15
 def language(request):
     return render(request,'language.html')

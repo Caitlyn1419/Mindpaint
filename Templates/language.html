@@ -20,11 +20,11 @@
 <main class="form-signin">
     {% csrf_token %}
         <img class="m-1 mb-6" src="{% static '/images/logo.png' %}" alt="" width="256">
-        <div>
-            <a href="{% url 'welcomeCN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">中文</a>
+        <br><br><br>
+        <a href="{% url 'welcomeCN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">中文</a>
 
-            <a href="{% url 'welcomeEN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">English</a>
-        </div>
+        <a href="{% url 'welcomeEN' %}" class="my-2 w-100 btn btn-lg btn-outline-primary">English</a>
+
 </main>
 </body>
 </html>
