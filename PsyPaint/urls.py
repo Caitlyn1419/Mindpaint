@@ -27,7 +27,7 @@ urlpatterns = [
     path('index_cn/', views.welcomeCN, name='welcomeCN'),
     path('test/<int:test_id>', views.tests, name='tests'),
     path('result/', views.testresult, name='testresult'),
-    path('paint/', views.testpaint, name='testpaint'),
 
+    # path('paint/', views.testpaint, name='testpaint'),
     path('result/', views.paint, name='result')
 ]
