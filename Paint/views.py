@@ -6,9 +6,12 @@ import random
 
 #The total number of the tests
 NUMBER_OF_TESTS = 15
+
+#The page of the language choosing
 def language(request):
     return render(request,'language.html')
 
+#The index page
 def welcome(request):
     if request.method == 'POST':
         data = {'tester_Name': request.POST['username'], 'tester_Gender': request.POST['gender'],
@@ -21,14 +24,15 @@ def welcome(request):
         request.session.pop('submitted_data', None)
         return redirect('tests', 1)
     #return redirect('welcomeEN' if request.session.get('lang', 'en') == 'en' else 'welcomeCN')
-
-
+#Different versions of the index page
 def welcomeEN(request):
     request.session['lang'] = 'en'
     return render(request, 'welcome.html', {'lang': 'en'})
 def welcomeCN(request):
     request.session['lang'] = 'cn'
     return render(request, 'welcome.html', {'lang': 'cn'})
+
+#The tests pages
 def tests(request, test_id):
     if request.session.get('data') is None or request.session.get('randomshapes') is None:
         return redirect('welcome')
@@ -94,6 +98,8 @@ def testresult(request):
         return redirect('welcome')
     lang = request.session.get('lang', 'en')
     return render(request, f'qresult_{lang}.html', request.session['submitted_data'])
+
+
 
 
 def testpaint(request):
